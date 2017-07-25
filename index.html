@@ -1,17 +1,27 @@
 <html>
 <head>
     <title>Transcribing Voice Recorder</title>
-    <script src="node_modules/infusion/dist/infusion-all.js"></script>
+    <script src="node_modules/flocking/dist/flocking-all.js"></script>
+    <script src="src/js/transcriber.js"></script>
+    <script src="src/js/audio-recorder.js"></script>
+    <script src="src/js/audio-recorder-strategy.js"></script>
+    <script src="src/js/media-stream-recorder.js"></script>
+    <script src="src/js/flocking-recorder.js"></script>
+    <script src="src/js/speech-transcriber.js"></script>
+    <script src="src/js/transcript-view.js"></script>
     <script src="src/js/transcribingRecorder.js"></script>
 </head>
 <body>
     <h1>Transcribing Voice Recorder</h1>
     <h2>Only Works in Chrome :(</h2>
     <div class="sjrk-voiceRecorder">
-
+        <button class="sjrk-voiceRecorder-record">Record</button>
+        <button class="sjrk-voiceRecorder-stop">Stop</button>
+        <p class="sjrk-voiceRecorder-transcript"></p>
     </div>
+
     <script>
-    sjrk.voiceRecorder(".sjrk-voiceRecorder", {});
+        window.voiceRecorder = sjrk.voiceRecorder(".sjrk-voiceRecorder", {});
     </script>
 </body>
 </html>

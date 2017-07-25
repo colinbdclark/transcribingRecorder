@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-      "infusion": "^2.0.0"
+      "infusion": "^2.0.0",
+      "flocking": "0.2.0-dev.20170206T221943Z.fb09a52"
   }
 }
