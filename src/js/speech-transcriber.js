@@ -4,7 +4,8 @@ fluid.defaults("sjrk.speechTranscriber", {
     gradeNames: ["fluid.modelComponent", "sjrk.transcriber"],
 
     speechOptions: {
-        continuous: true
+        continuous: true,
+        interimResults: true
     },
 
     members: {
@@ -18,10 +19,15 @@ fluid.defaults("sjrk.speechTranscriber", {
 
     model: {
         // TODO: Add support for tracking interim results.
-        transcript: ""
+        transcript: "",
+        utterances: [],
+        startTime: 0,
+        interimResultsPending: false,
+        interimResultStart: 0
     },
 
     events: {
+        onStart: null,
         onResult: null,
         onReset: null
     },
@@ -29,10 +35,7 @@ fluid.defaults("sjrk.speechTranscriber", {
     invokers: {
         reset: "{that}.events.onReset.fire()",
 
-        start: {
-            "this": "{that}.speechRecognizer",
-            method: "start"
-        },
+        start: "{that}.events.onStart.fire()",
 
         stop: {
             "this": "{that}.speechRecognizer",
@@ -41,6 +44,16 @@ fluid.defaults("sjrk.speechTranscriber", {
     },
 
     listeners: {
+        "onStart.startRecognizer": {
+            "this": "{that}.speechRecognizer",
+            method: "start"
+        },
+
+        "onStart.markTime": {
+            funcName: "sjrk.time.applyNow",
+            args: ["{that}.applier", "startTime"]
+        },
+
         "onReset.stop": "{that}.stop()",
 
         "onReset.clearTranscript": {
@@ -70,13 +83,53 @@ sjrk.speechTranscriber.createRecognizer = function (that) {
 };
 
 sjrk.speechTranscriber.transcribeResults = function (that, resultEvt) {
-    var results = resultEvt.results;
+    var hasInterimResult = false,
+        results = resultEvt.results;
 
     for (var i = resultEvt.resultIndex; i < results.length; i++) {
         var result = results[i];
-        if (result.isFinal) {
-            that.applier.change("transcript",
-                that.model.transcript + result[0].transcript);
+        if (!result.isFinal) {
+            hasInterimResult = true;
+            break;
         }
     }
+
+    if (hasInterimResult && !that.model.interimResultsPending) {
+        sjrk.speechTranscriber.interimResultsStart(that.applier);
+    } else if (!hasInterimResult && that.model.interimResultsPending) {
+        // TODO: This is very likely an error, since it assumes that there is
+        // only one new finalized result occurring at the end of a period of
+        // interim results.
+        //
+        // It seems quite possible that some interim results will actually
+        // be finalized while others remain interim,
+        // and so we'll likely be overly "clumpy".
+        //
+        // Instead, we should transcribe each new finalized result
+        // and reset the interimResultStart time accordingly.
+        sjrk.speechTranscriber.addUtterance(that, results);
+        sjrk.speechTranscriber.interimResultsEnd(that.applier);
+    }
+};
+
+sjrk.speechTranscriber.interimResultsStart = function (applier) {
+    sjrk.time.applyNow(applier, "interimResultStart");
+    applier.change("interimResultsPending", true);
+};
+
+sjrk.speechTranscriber.interimResultsEnd = function (applier) {
+    applier.change("interimResultsPending", false);
+};
+
+sjrk.speechTranscriber.addUtterance = function (that, results) {
+    var utterance = {
+        startTime: (that.model.interimResultStart - that.model.startTime) / 1000,
+        endTime: (Date.now() - that.model.startTime) / 1000,
+        text: results[results.length - 1][0].transcript
+    };
+
+    // TODO: Is this the best way to handle arrays
+    // using the ChangeApplier currently?
+    that.applier.change("utterances" + "." + that.model.utterances.length,
+        utterance);
 };

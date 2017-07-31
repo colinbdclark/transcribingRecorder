@@ -35,8 +35,8 @@ fluid.defaults("sjrk.flockingRecorder", {
 
     listeners: {
         "onStart.markTime": {
-            funcName: "sjrk.flockingRecorder.markTime",
-            args: ["{that}", "startTime"]
+            funcName: "sjrk.time.applyNow",
+            args: ["{that}.applier", "startTime"]
         },
 
         "onStart.startEnviro": {
@@ -50,8 +50,8 @@ fluid.defaults("sjrk.flockingRecorder", {
         },
 
         "onStop.markTime": {
-            funcName: "sjrk.flockingRecorder.markTime",
-            args: ["{that}", "stopTime"]
+            funcName: "sjrk.time.applyNow",
+            args: ["{that}.applier", "stopTime"]
         },
 
         "onStop.pauseSynth": {
@@ -77,10 +77,6 @@ fluid.defaults("sjrk.flockingRecorder", {
         }
     }
 });
-
-sjrk.flockingRecorder.markTime = function (that, timePath) {
-    that.applier.change(timePath, Date.now());
-};
 
 sjrk.flockingRecorder.resetRecordingBuffer = function (that) {
     // A travesty of sorts.

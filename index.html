@@ -1,7 +1,8 @@
 <html>
 <head>
     <title>Transcribing Voice Recorder</title>
-    <script src="node_modules/flocking/dist/flocking-all.js"></script>
+    <script src="node_modules/infusion/dist/infusion-all.js"></script>
+    <script src="src/js/utilities.js"></script>
     <script src="src/js/transcriber.js"></script>
     <script src="src/js/audio-recorder.js"></script>
     <script src="src/js/audio-recorder-strategy.js"></script>
@@ -21,7 +22,7 @@
     </div>
 
     <script>
-        window.voiceRecorder = sjrk.voiceRecorder(".sjrk-voiceRecorder", {});
+        window.voiceRecorder = sjrk.voiceRecorder(".sjrk-voiceRecorder");
     </script>
 </body>
 </html>

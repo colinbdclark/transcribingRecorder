@@ -16,7 +16,7 @@ fluid.defaults("sjrk.voiceRecorder", {
             container: "{voiceRecorder}.dom.transcript",
             options: {
                 model: {
-                    transcript: "{speechTranscriber}.model.transcript"
+                    utterances: "{speechTranscriber}.model.utterances"
                 }
             }
         },
