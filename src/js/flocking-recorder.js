@@ -1,5 +1,6 @@
 "use strict";
 
+// TODO: Replace this with a pure Web Audio implementation.
 fluid.defaults("sjrk.flockingRecorder", {
     gradeNames: [
         "fluid.modelComponent", "sjrk.audioRecorderStrategy"
@@ -115,7 +116,7 @@ sjrk.flockingRecorder.encodeBuffer = function (that) {
 
     var encoded = flock.audio.encode.wav(trimmed, "int16");
 
-    that.events.afterAllData.fire([encoded], "audio/wav");
+    that.events.onAudioReady.fire([encoded], "audio/wav");
 };
 
 fluid.defaults("sjrk.flockingRecorder.synth", {

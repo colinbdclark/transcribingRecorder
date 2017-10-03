@@ -1,28 +1,34 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="utf-8"/>
     <title>Transcribing Voice Recorder</title>
     <script src="node_modules/infusion/dist/infusion-all.js"></script>
-    <script src="src/js/utilities.js"></script>
+    <script src="src/js/time-utilities.js"></script>
     <script src="src/js/transcriber.js"></script>
     <script src="src/js/audio-recorder.js"></script>
     <script src="src/js/audio-recorder-strategy.js"></script>
+    <script src="src/js/media-stream-holder.js"></script>
+    <script src="src/js/media-device.js"></script>
+    <script src="src/js/audio-device.js"></script>
     <script src="src/js/media-stream-recorder.js"></script>
     <script src="src/js/flocking-recorder.js"></script>
+    <script src="src/js/speech-recognition-checker.js"></script>
     <script src="src/js/speech-transcriber.js"></script>
     <script src="src/js/transcript-view.js"></script>
-    <script src="src/js/transcribingRecorder.js"></script>
+    <script src="src/js/story-recorder.js"></script>
+    <script src="src/js/story-recorder-with-transcription.js"></script>
 </head>
 <body>
-    <h1>Transcribing Voice Recorder</h1>
-    <h2>Only Works in Chrome :(</h2>
-    <div class="sjrk-voiceRecorder">
-        <button class="sjrk-voiceRecorder-record">Record</button>
-        <button class="sjrk-voiceRecorder-stop">Stop</button>
-        <p class="sjrk-voiceRecorder-transcript"></p>
+    <h1>SJRK Story Recorder</h1>
+    <div class="sjrk-storyRecorder">
+        <button class="sjrk-storyRecorder-record">Record</button>
+        <button class="sjrk-storyRecorder-stop">Stop</button>
+        <p class="sjrk-storyRecorder-transcript"></p>
     </div>
 
     <script>
-        window.voiceRecorder = sjrk.voiceRecorder(".sjrk-voiceRecorder");
+        window.storyRecorder = sjrk.storyRecorder(".sjrk-storyRecorder");
     </script>
 </body>
 </html>

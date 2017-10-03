@@ -1,15 +1,11 @@
 {
-  "name": "voicerecorder",
-  "version": "0.0.1",
-  "description": "Infusion-based voice recorder",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-      "infusion": "^2.0.0",
-      "flocking": "0.2.0-dev.20170206T221943Z.fb09a52"
-  }
+    "name": "storyRecorder",
+    "version": "0.1.0",
+    "description": "SJRK's Story Recorder",
+    "author": "OCAD University",
+    "license": "BSD-3-Clause",
+    "dependencies": {
+        "infusion": "3.0.0-dev.20170830T182157Z.392b2f8",
+        "flocking": "0.2.0-dev.20170206T221943Z.fb09a52"
+    }
 }

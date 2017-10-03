@@ -13,7 +13,7 @@ fluid.defaults("sjrk.transcriber", {
     },
 
     listeners: {
-        "{voiceRecorder}.events.onRecord": "{that}.start",
-        "{voiceRecorder}.events.onStop": "{that}.stop"
+        "{storyRecorder}.events.onRecord": "{that}.start",
+        "{storyRecorder}.events.onStop": "{that}.stop"
     }
 })

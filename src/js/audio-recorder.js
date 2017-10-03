@@ -7,12 +7,11 @@
 fluid.defaults("sjrk.audioRecorder", {
     gradeNames: ["sjrk.transcriber"],
 
-    constraints: {
-        audio: true,
-        video: false
-    },
-
     components: {
+        mediaDevice: {
+            type: "sjrk.audioDevice"
+        },
+
         recordingStrategy: {
             createOnEvent: "onMediaAccess",
             type: "sjrk.mediaStreamRecorder",
@@ -28,29 +27,21 @@ fluid.defaults("sjrk.audioRecorder", {
     },
 
     events: {
-        onMediaAccess: null,
-        onMediaError: null,
+        onMediaAccess: "{mediaDevice}.events.onAccess",
+        onMediaError: "{mediaDevice}.events.onError",
         onRecordingStart: null,
         onStop: null,
         onDataAvailable: null,
         onRecordingStop: null,
-        afterAllData: null
+        onAudioReady: null
     },
 
     listeners: {
         "onCreate.requestMediaAccess": {
-            // TODO: Add a shim for navigator.mediaDevices.getUserMedia()
-            // so that we are Safari-ready.
-            "this": "navigator",
-            method: "getUserMedia",
-            args: [
-                "{that}.options.constraints",
-                "{that}.events.onMediaAccess.fire",
-                "{that}.events.onMediaError.fire",
-            ]
+            func:"{that}.mediaDevice.requestAccess"
         },
 
-        "afterAllData.encodeAudio": {
+        "onAudioReady.encodeAudio": {
             funcName: "sjrk.audioRecorder.encodeAudio",
             args: ["{that}", "{arguments}.0", "{arguments}.1"]
         },

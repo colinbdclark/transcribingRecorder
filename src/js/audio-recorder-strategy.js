@@ -6,7 +6,7 @@ fluid.defaults("sjrk.audioRecorderStrategy", {
     events: {
         onRecordingStart: "{audioRecorder}.events.onRecordingStart",
         onRecordingStop: "{audioRecorder}.events.onRecordingStop",
-        afterAllData: "{audioRecorder}.events.afterAllData"
+        onAudioReady: "{audioRecorder}.events.onAudioReady"
     },
 
     listeners: {

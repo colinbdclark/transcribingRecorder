@@ -1,31 +1,26 @@
 "use strict";
 
-fluid.defaults("sjrk.voiceRecorder", {
-    gradeNames: ["fluid.viewComponent"],
+fluid.defaults("sjrk.storyRecorder", {
+    gradeNames: ["fluid.viewComponent", "fluid.contextAware"],
+
+    contextAwareness: {
+        speechRecAware: {
+            checks: {
+                speechRecAware: {
+                    contextValue: "{sjrk.supportsSpeechRec}",
+                    gradeNames: "sjrk.storyRecorder.withTranscription"
+                }
+            },
+            defaultGradeNames: "fluid.viewComponent"
+        }
+    },
 
     components: {
-        // TODO: Use Infusion context awareness to only instantiate a
-        // speechTranscriber/transcriptView when we're in a
-        // SpeechRecognition-capable browser
-        speechTranscriber: {
-            type: "sjrk.speechTranscriber"
-        },
-
-        transcriptView: {
-            type: "sjrk.transcriptView",
-            container: "{voiceRecorder}.dom.transcript",
-            options: {
-                model: {
-                    utterances: "{speechTranscriber}.model.utterances"
-                }
-            }
-        },
-
         audioRecorder: {
             type: "sjrk.audioRecorder",
             options: {
                 events: {
-                    onRecordingAvailable: "{voiceRecorder}.events.onRecordingAvailable"
+                    onRecordingAvailable: "{storyRecorder}.events.onRecordingAvailable"
                 }
             }
         }
@@ -35,9 +30,8 @@ fluid.defaults("sjrk.voiceRecorder", {
     },
 
     selectors: {
-        record: ".sjrk-voiceRecorder-record",
-        stop: ".sjrk-voiceRecorder-stop",
-        transcript: ".sjrk-voiceRecorder-transcript"
+        record: ".sjrk-storyRecorder-record",
+        stop: ".sjrk-storyRecorder-stop",
     },
 
     markup: {
@@ -66,7 +60,7 @@ fluid.defaults("sjrk.voiceRecorder", {
         },
 
         "onRecordingAvailable.injectAudio": {
-            funcName: "sjrk.voiceRecorder.injectAudio",
+            funcName: "sjrk.storyRecorder.injectAudio",
             args: ["{that}", "{arguments}.0"]
         }
     },
@@ -77,7 +71,7 @@ fluid.defaults("sjrk.voiceRecorder", {
     }
 });
 
-sjrk.voiceRecorder.injectAudio = function (that, dataURL) {
+sjrk.storyRecorder.injectAudio = function (that, dataURL) {
     var playerMarkup = fluid.stringTemplate(that.options.markup.audio, {
         url: dataURL
     });

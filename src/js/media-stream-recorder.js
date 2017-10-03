@@ -1,13 +1,7 @@
 "use strict";
 
 fluid.defaults("sjrk.mediaStreamRecorder", {
-    gradeNames: "sjrk.audioRecorderStrategy",
-
-    mergePolicy: {
-        stream: "nomerge"
-    },
-
-    stream: "fluid.mustBeOverridden",
+    gradeNames: ["sjrk.audioRecorderStrategy"],
 
     mediaRecorderOptions: {
         type: "audio/webm;codec=opus"
@@ -18,7 +12,7 @@ fluid.defaults("sjrk.mediaStreamRecorder", {
             expander: {
                 funcName: "sjrk.mediaStreamRecorder.createRecorder",
                 args: [
-                    "{that}.options.stream",
+                    "{mediaDevice}.streamHolder.stream",
                     "{that}.options.mediaRecorderOptions"
                 ]
             }
@@ -88,13 +82,13 @@ fluid.defaults("sjrk.mediaStreamRecorder", {
             args: ["{that}", "{arguments}.0"]
         },
 
-        "onStop.fireAllData": {
-            func: "{that}.events.afterAllData.fire",
+        "onStop.fireAudioReady": {
+            func: "{that}.events.onAudioReady.fire",
             args: ["{that}.chunks"]
         },
 
         "onStop.clearChunks": {
-            priority: "after:fireAllData",
+            priority: "after:fireAudioReady",
             funcName: "sjrk.mediaStreamRecorder.clearChunks",
             args: ["{that}.chunks"]
         }
