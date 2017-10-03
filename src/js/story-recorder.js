@@ -1,3 +1,13 @@
+/*
+Social Justice Repair Kit Story Recorder
+Copyright 2017 OCAD University
+
+Licensed under the 3-Clause BSD license. You may not use this file except in compliance with this license.
+
+You may obtain a copy of the 3-Clause BSD License at
+https://github.com/fluid-project/sjrk-story-recorder/raw/master/LICENSE.txt
+*/
+
 "use strict";
 
 fluid.defaults("sjrk.storyRecorder", {
@@ -25,8 +35,9 @@ fluid.defaults("sjrk.storyRecorder", {
             }
         }
 
-        // TODO: Implement an AudioView that instantiates a component
-        // per recording.
+        // TODO: Implement a dynamic component that provides a view of each
+        // "recording session," consisting of the transcript with its
+        // associated audio data.
     },
 
     selectors: {
