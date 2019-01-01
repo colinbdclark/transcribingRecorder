@@ -52,8 +52,8 @@ fluid.defaults("sjrk.audioRecorder", {
             func:"{that}.mediaDevice.requestAccess"
         },
 
-        "onAudioReady.encodeAudio": {
-            funcName: "sjrk.audioRecorder.encodeAudio",
+        "onAudioReady.dataURLFromRawData": {
+            funcName: "sjrk.audioRecorder.dataURLFromRawData",
             args: ["{that}", "{arguments}.0", "{arguments}.1"]
         },
 
@@ -67,7 +67,7 @@ fluid.defaults("sjrk.audioRecorder", {
     }
 });
 
-sjrk.audioRecorder.encodeAudio = function (that, data, encoding) {
+sjrk.audioRecorder.dataURLFromRawData = function (that, data, encoding) {
     var audioBlob = new Blob(data, {
         type: encoding
     });

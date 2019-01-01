@@ -10,6 +10,11 @@ https://github.com/fluid-project/sjrk-story-recorder/raw/master/LICENSE.txt
 
 "use strict";
 
+/**
+ * An AudioRecorderStrategy is an "abstract grade" used by sjrk.audioRecorder,
+ * which represents a particular strategy for capturing and encoding
+ * audio.
+ */
 fluid.defaults("sjrk.audioRecorderStrategy", {
     gradeNames: "fluid.component",
 
